@@ -5,7 +5,6 @@ set -e
 # ========= 配置区 =========
 COLLECTION_NAME="hocgin Swift Packages"
 COLLECTION_OVERVIEW="Internal Swift Packages"
-OUTPUT_FILE="collection.json"
 PACKAGES_FILE="packages.json"
 
 # 私有仓库列表（自己改）
@@ -44,44 +43,55 @@ CERT_PATH="./certificate.pem"
 # ========= 生成 packages.json =========
 echo "📦 Generating packages.json..."
 
-echo '{ "packages": [' > $PACKAGES_FILE
+cat > $PACKAGES_FILE << EOF
+{
+  "formatVersion": "1.0",
+  "collections": [
+    {
+      "name": "$COLLECTION_NAME",
+      "identifier": "com.hocgin.swift-packages",
+      "overview": "$COLLECTION_OVERVIEW",
+      "authorName": "hocgin",
+      "keywords": [
+        "Swift",
+        "SwiftUI",
+        "iOS",
+        "macOS"
+      ],
+      "packages": [
+EOF
 
 for i in "${!PACKAGES[@]}"; do
   URL=${PACKAGES[$i]}
 
   if [ $i -lt $((${#PACKAGES[@]} - 1)) ]; then
-    echo "  { \"url\": \"$URL\" }," >> $PACKAGES_FILE
+    echo "        { \"url\": \"$URL\" }," >> $PACKAGES_FILE
   else
-    echo "  { \"url\": \"$URL\" }" >> $PACKAGES_FILE
+    echo "        { \"url\": \"$URL\" }" >> $PACKAGES_FILE
   fi
 done
 
-echo ']}' >> $PACKAGES_FILE
+cat >> $PACKAGES_FILE << EOF
+      ]
+    }
+  ]
+}
+EOF
 
 echo "✅ packages.json created"
-
-# ========= 生成 collection =========
-echo "📚 Generating collection.json..."
-
-swift package-collection generate "$OUTPUT_FILE" \
-#  --input "$PACKAGES_FILE" \
-  --name "$COLLECTION_NAME" \
-  --overview "$COLLECTION_OVERVIEW"
-
-echo "✅ collection.json generated"
 
 # ========= 可选签名 =========
 if [ "$ENABLE_SIGN" = true ]; then
   echo "🔐 Signing collection..."
 
-  swift package-collection sign "$OUTPUT_FILE" \
+  swift package-collection sign "$PACKAGES_FILE" \
     --private-key "$PRIVATE_KEY_PATH" \
     --cert-chain "$CERT_PATH" \
-    --output "signed-$OUTPUT_FILE"
+    --output "signed-$PACKAGES_FILE"
 
-  echo "✅ signed-$OUTPUT_FILE generated"
+  echo "✅ signed-$PACKAGES_FILE generated"
 fi
 
 echo ""
 echo "🎉 Done!"
-echo "👉 Output: $OUTPUT_FILE"
+echo "👉 Output: $PACKAGES_FILE"
