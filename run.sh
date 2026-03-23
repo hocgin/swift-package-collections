@@ -5,7 +5,11 @@ set -e
 # ========= 配置区 =========
 COLLECTION_NAME="hocgin Swift Packages"
 COLLECTION_OVERVIEW="Internal Swift Packages"
-PACKAGES_FILE="packages.json"
+
+# 输入/输出文件
+INPUT_FILE="packages.json"
+OUTPUT_FILE="collection.json"
+SIGNED_OUTPUT_FILE="collection-signed.json"
 
 # 私有仓库列表（自己改）
 PACKAGES=(
@@ -40,58 +44,56 @@ ENABLE_SIGN=false
 PRIVATE_KEY_PATH="./private-key.pem"
 CERT_PATH="./certificate.pem"
 
-# ========= 生成 packages.json =========
-echo "📦 Generating packages.json..."
+# ========= 生成输入文件 packages.json =========
+echo "📦 Generating input file: $INPUT_FILE..."
 
-cat > $PACKAGES_FILE << EOF
+cat > $INPUT_FILE << EOF
 {
-  "formatVersion": "1.0",
-  "collections": [
-    {
-      "name": "$COLLECTION_NAME",
-      "identifier": "com.hocgin.swift-packages",
-      "overview": "$COLLECTION_OVERVIEW",
-      "authorName": "hocgin",
-      "keywords": [
-        "Swift",
-        "SwiftUI",
-        "iOS",
-        "macOS"
-      ],
-      "packages": [
+  "name": "$COLLECTION_NAME",
+  "overview": "$COLLECTION_OVERVIEW",
+  "packages": [
 EOF
 
 for i in "${!PACKAGES[@]}"; do
   URL=${PACKAGES[$i]}
 
   if [ $i -lt $((${#PACKAGES[@]} - 1)) ]; then
-    echo "        { \"url\": \"$URL\" }," >> $PACKAGES_FILE
+    echo "    { \"url\": \"$URL\" }," >> $INPUT_FILE
   else
-    echo "        { \"url\": \"$URL\" }" >> $PACKAGES_FILE
+    echo "    { \"url\": \"$URL\" }" >> $INPUT_FILE
   fi
 done
 
-cat >> $PACKAGES_FILE << EOF
-      ]
-    }
+cat >> $INPUT_FILE << EOF
   ]
 }
 EOF
 
-echo "✅ packages.json created"
+echo "✅ $INPUT_FILE created"
+
+# ========= 生成完整的 collection =========
+echo "📚 Generating collection: $OUTPUT_FILE..."
+
+package-collection-generate "$INPUT_FILE" "$OUTPUT_FILE"
+
+echo "✅ $OUTPUT_FILE generated"
 
 # ========= 可选签名 =========
 if [ "$ENABLE_SIGN" = true ]; then
   echo "🔐 Signing collection..."
 
-  swift package-collection sign "$PACKAGES_FILE" \
-    --private-key "$PRIVATE_KEY_PATH" \
-    --cert-chain "$CERT_PATH" \
-    --output "signed-$PACKAGES_FILE"
+  package-collection-sign \
+    "$OUTPUT_FILE" \
+    "$SIGNED_OUTPUT_FILE" \
+    "$PRIVATE_KEY_PATH" \
+    "$CERT_PATH"
 
-  echo "✅ signed-$PACKAGES_FILE generated"
+  echo "✅ $SIGNED_OUTPUT_FILE generated"
+  echo ""
+  echo "🎉 Done!"
+  echo "👉 Output: $SIGNED_OUTPUT_FILE"
+else
+  echo ""
+  echo "🎉 Done!"
+  echo "👉 Output: $OUTPUT_FILE"
 fi
-
-echo ""
-echo "🎉 Done!"
-echo "👉 Output: $PACKAGES_FILE"

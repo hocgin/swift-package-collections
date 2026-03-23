@@ -1,41 +1,28 @@
 {
-  "formatVersion": "1.0",
-  "collections": [
-    {
-      "name": "hocgin Swift Packages",
-      "identifier": "com.hocgin.swift-packages",
-      "overview": "Internal Swift Packages",
-      "authorName": "hocgin",
-      "keywords": [
-        "Swift",
-        "SwiftUI",
-        "iOS",
-        "macOS"
-      ],
-      "packages": [
-        { "url": "git@github.com:hocgin/SwiftUIS.git" },
-        { "url": "git@github.com:hocgin/SwiftUIS-SUPlanet.git" },
-        { "url": "git@github.com:hocgin/SwiftAI.git" },
-        { "url": "git@github.com:hocgin/CacheKit.git" },
-        { "url": "git@github.com:hocgin/SwiftStore.git" },
-        { "url": "git@github.com:hocgin/SwiftICONS.git" },
-        { "url": "git@github.com:hocgin/SwiftChangeKit.git" },
-        { "url": "git@github.com:hocgin/SwiftContext.git" },
-        { "url": "git@github.com:hocgin/SwiftGlass.git" },
-        { "url": "git@github.com:hocgin/SwiftShare.git" },
-        { "url": "git@github.com:hocgin/SwiftGRDB.git" },
-        { "url": "git@github.com:hocgin/SwiftAPI.git" },
-        { "url": "git@github.com:hocgin/SwiftPermissionKit.git" },
-        { "url": "git@github.com:hocgin/SwiftPopup.git" },
-        { "url": "git@github.com:hocgin/SwiftGuideKit.git" },
-        { "url": "git@github.com:hocgin/SwiftToast.git" },
-        { "url": "git@github.com:hocgin/SwiftTraceKit.git" },
-        { "url": "git@github.com:hocgin/SwiftError.git" },
-        { "url": "git@github.com:hocgin/SwiftLogKit.git" },
-        { "url": "git@github.com:hocgin/SwiftWebKit.git" },
-        { "url": "git@github.com:hocgin/SwiftExtensionsKit.git" },
-        { "url": "git@github.com:hocgin/SwiftTCA.git" }
-      ]
-    }
+  "name": "hocgin Swift Packages",
+  "overview": "Internal Swift Packages",
+  "packages": [
+    { "url": "git@github.com:hocgin/SwiftUIS.git" },
+    { "url": "git@github.com:hocgin/SwiftUIS-SUPlanet.git" },
+    { "url": "git@github.com:hocgin/SwiftAI.git" },
+    { "url": "git@github.com:hocgin/CacheKit.git" },
+    { "url": "git@github.com:hocgin/SwiftStore.git" },
+    { "url": "git@github.com:hocgin/SwiftICONS.git" },
+    { "url": "git@github.com:hocgin/SwiftChangeKit.git" },
+    { "url": "git@github.com:hocgin/SwiftContext.git" },
+    { "url": "git@github.com:hocgin/SwiftGlass.git" },
+    { "url": "git@github.com:hocgin/SwiftShare.git" },
+    { "url": "git@github.com:hocgin/SwiftGRDB.git" },
+    { "url": "git@github.com:hocgin/SwiftAPI.git" },
+    { "url": "git@github.com:hocgin/SwiftPermissionKit.git" },
+    { "url": "git@github.com:hocgin/SwiftPopup.git" },
+    { "url": "git@github.com:hocgin/SwiftGuideKit.git" },
+    { "url": "git@github.com:hocgin/SwiftToast.git" },
+    { "url": "git@github.com:hocgin/SwiftTraceKit.git" },
+    { "url": "git@github.com:hocgin/SwiftError.git" },
+    { "url": "git@github.com:hocgin/SwiftLogKit.git" },
+    { "url": "git@github.com:hocgin/SwiftWebKit.git" },
+    { "url": "git@github.com:hocgin/SwiftExtensionsKit.git" },
+    { "url": "git@github.com:hocgin/SwiftTCA.git" }
   ]
 }

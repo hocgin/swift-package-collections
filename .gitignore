@@ -1,1 +1,9 @@
 .idea/
+
+# Generated collection files
+collection.json
+collection-signed.json
+
+# Certificate files
+*.pem
+*.cer
